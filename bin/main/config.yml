@@ -1,0 +1,111 @@
+CodeLength: 8 # the length of the code
+TickLimit: 1200 # tick, 20 tick = 1 second, the code will expire after this time, can not be less than 200
+SafeModeCount: 3 # if the player enter the code wrong for times, he/she will be banned, 0 to disable ( not recommended )
+CoolDown: 1200 # tick, 20 tick = 1 second, cool down time for login command, 0 to disable ( not recommended )
+
+PluginPrefix: "&7[&bAuthOp&7] &r" # the prefix of the plugin
+
+CommandHelp:
+  Login: "Get your verification code"
+  Logout: "Logout from the AuthOp System"
+  Reload: "Reload the AuthOp Plugin"
+  V: "Verify the code"
+Message:
+  Login:
+    CoolDown: "You can only use this command after :"
+    AlreadyLogin: "You have already login"
+  Logout:
+    NotLogin: "You have not login"
+  V:
+    NoCode: "Please enter your code"
+  General:
+    MustBePlayer: "You must be a player to use this command"
+    NoPermission: "You don't have permission to use this command"
+    UnknownCommand: "Unknown command. Type \"/aop\" for help."
+    UnknownParameter: "Unknown parameter. Type \"/aop\" for help."
+    Reload: "Plugin config reloaded"
+    TimerStopped: "There are no items that need to be timed, the timer is paused"
+    CodeExpired: "One code has expired: "
+
+# ONLY these player can use this plugin. DO NOT add anything until you know what you are doing
+OpPlayers: {}
+
+# ==========================
+# @p will be replaced with player name
+# @c will be replaced with code
+# @t will be replaced with expire tick
+# @s will be replaced with SafeModeCounter( failed times for each player )
+# @d will be replaced with CoolDown ( cd time for each player )
+# ==========================
+# Why you should send message with 'msg' option instead of 'msg' command?
+#
+# Because the 'msg' option will send message to the player with the plugin prefix
+# and will not create any extra log. This is better for everyone.
+# ==========================
+# All the commands will be executed as CONSOLE !!!
+# ==========================
+
+# Login command :
+# You can write down some commands which can give the player the code
+# ==========================
+# for example, if you have a plugin that can send an e-mail to the player,
+# and the command is /sendmail <player> <message>
+# you can write down the command like :
+# - sendmail @p Your code is @c
+# or maybe with PlaceholderAPI if the command is like /sendmail <address> <message>
+# - sendmail %database_mailbind_@p% Your code is @c
+
+OnLogin:
+  msg:
+    - "@p Your code is @c, it will expire in @t ticks"
+  cmd: {}
+
+# OnSuccess command :
+# You can write down some commands which will be executed when the player
+# successfully enter the code
+# ==========================
+# for example, just as the name of the plugin,
+# you can give the player Op permission when he/she enter the code
+# BUT what we have here is just send a message to the player.
+# In case you give someone Op permission out of your control.
+OnSuccess:
+  msg:
+    - "@p You have successfully enter the code"
+  cmd: {}
+
+# OnFail command :
+# You can write down some commands which will be executed when the player
+# failed to enter the code
+# ==========================
+# if you really want to use this plugin for OP authentication,
+# WE STRONGLY RECOMMEND you KICK the player when he/she failed to enter the code
+# BUT what we have here is just send a message to the player.
+OnFail:
+  msg:
+    - "@p You have failed to enter the code"
+  cmd: {}
+
+# OnSafeMode command :
+# You can write down some commands which will be executed when the player
+# failed to enter the right code in limit count
+# ==========================
+# if you really want to use this plugin for OP authentication,
+# WE STRONGLY RECOMMEND you BAN the player when he/she failed to enter the code for limit times
+# BUT what we have here is just send a message to the player.
+# *NOTE*: banip is better.
+OnSafeMode:
+  msg:
+    - "@p You have failed to enter the code for 8 times, you will be banned until the server unban you"
+  cmd: {}
+
+# OnLogout command :
+# You can write down some commands which will be executed when the player
+# logout from the server or execute /aop logout
+# ==========================
+# if you really want to use this plugin for OP authentication,
+# WE STRONGLY RECOMMEND you deop the player when he/she logout
+# BUT what we have here is just send a message to the player.
+OnLogout:
+  msg:
+    - "msg @p You have logout from the AuthOp System"
+  cmd: {}

@@ -1,0 +1,13 @@
+name: AuthOp
+version: '${version}'
+main: cn.yxgeneral.weavestudio.authop.AuthOp
+api-version: '1.20'
+
+softdepend:
+  - PlaceholderAPI
+
+commands:
+  authop:
+    description: "authop root command"
+    usage: /authop
+    aliases: [authop, aop]
